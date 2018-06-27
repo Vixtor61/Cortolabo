@@ -121,10 +121,10 @@ public class Consulta extends JFrame {
         
         estado = new JCheckBox();
 
-        nombre.setBounds(140, 10, ANCHOC, ALTOC);
-        director.setBounds(140, 100, ANCHOC, ALTOC);
+        nombre.setBounds(90, 30, ANCHOC, ALTOC);
+        director.setBounds(90, 100, ANCHOC, ALTOC);
         clasificacion.setBounds(430, 30, 100, ALTOC);
-        pais.setBounds(140, 180, 100, ALTOC);
+        pais.setBounds(90, 180, 100, ALTOC);
         año.setBounds(430, 100, 100, ALTOC);
        
         buscar.setBounds(10, 250, ANCHOC, ALTOC);
@@ -140,7 +140,8 @@ public class Consulta extends JFrame {
                 return false; 
             }
         };
-        table.setBounds(10, 350, 600, 200);
+       // table.setBounds(10, 350, 600, 200);
+          table.setBounds(10, 350, 600, 2000);
         table.add(new JScrollPane(resultados));
     }
 
@@ -211,26 +212,23 @@ public class Consulta extends JFrame {
         actualizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*
                 EstudianteDao ed = new EstudianteDao();
-                Movie estu = new Movie(nombre.getText(), director.getText(),pais.getText(), clasificacion.getSelectedItem().toString(),Integer.parseInt(año.getText()), true);
+                System.out.print(estado.isSelected());
+                Movie estu = new Movie( nombre.getText(), director.getText(),pais.getText(), clasificacion.getSelectedItem().toString(),Integer.parseInt(año.getText()), estado.isSelected());
 
-                if (estado.isSelected()) {
-                    estu.setEn_proyeccion(true);
+                if (!estado.isSelected()) {
+                    System.out.print("DSAD");
+                    estu.setEn_proyeccion(false);
                 }
 
-                if (ed.update(estu)) {//cambiar en metodo de Object Key a Generic g.
-                    JOptionPane.showMessageDialog(null, "movie modificado con exito");
+                if (ed.update(estu)) {
+                    JOptionPane.showMessageDialog(null, "Movie registrado con existo");
                     limpiarCampos();
                     llenarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de modificar la pelicula");
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de insertar la pelicula");
                 }
-*/
-            llenarTabla();
             }
-            
-
         });
 
         eliminar.addActionListener(new ActionListener() {
@@ -286,9 +284,9 @@ public class Consulta extends JFrame {
                     nombre.setText(resultados.getValueAt(resultados.getSelectedRow(), 0).toString());
                     clasificacion.setSelectedItem(resultados.getValueAt(resultados.getSelectedRow(), 3).toString());
                     director.setText(resultados.getValueAt(resultados.getSelectedRow(), 1).toString());
-
+                    año.setText(resultados.getValueAt(resultados.getSelectedRow(),4).toString());
                     pais.setText(resultados.getValueAt(resultados.getSelectedRow(), 2).toString()); 
-                    if (resultados.getValueAt(resultados.getSelectedRow(), 4).toString() == "false") {
+                    if (resultados.getValueAt(resultados.getSelectedRow(), 5).toString() == "true") {
                         estado.setSelected(true);
                     } else {
                         estado.setSelected(false);
