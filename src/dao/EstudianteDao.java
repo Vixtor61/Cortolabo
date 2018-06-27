@@ -35,7 +35,7 @@ public class EstudianteDao implements Metodos<Movie>{
             ps.setString(3, g.getPais());
             ps.setString(4, g.getClasificacion());
             ps.setInt(5, g.getAño());
-            ps.setBoolean(6, true);
+            ps.setBoolean(6, g.isEn_proyeccion());
             if (ps.executeUpdate() > 0) {
                 return true;
             }

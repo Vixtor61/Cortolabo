@@ -81,9 +81,9 @@ public class Consulta extends JFrame {
         lblNombre = new JLabel("Nombre:");
         
         lblPais = new JLabel("Pais:");
-        lblEn_proyeccion = new JLabel("Estado:");
-        lblAño = new JLabel("año:");
-        lblDirector   = new JLabel("direcotor:");
+        lblEn_proyeccion = new JLabel("En proyeccion:");
+        lblAño = new JLabel("Año:");
+        lblDirector   = new JLabel("Director:");
         lblClasificacion  = new JLabel("Clasificacion:");
         lblAño.setBounds(340, 100, ANCHOC, ALTOC);
 
@@ -123,17 +123,17 @@ public class Consulta extends JFrame {
 
         nombre.setBounds(140, 10, ANCHOC, ALTOC);
         director.setBounds(140, 100, ANCHOC, ALTOC);
-        clasificacion.setBounds(500, 30, 100, ALTOC);
+        clasificacion.setBounds(430, 30, 100, ALTOC);
         pais.setBounds(140, 180, 100, ALTOC);
-        año.setBounds(500, 100, 100, ALTOC);
-        estado.setBounds(140, 100, ANCHOC, ALTOC);
-        buscar.setBounds(300, 10, ANCHOC, ALTOC);
+        año.setBounds(430, 100, 100, ALTOC);
+       
+        buscar.setBounds(10, 250, ANCHOC, ALTOC);
         insertar.setBounds(10, 300, ANCHOC, ALTOC);
         actualizar.setBounds(150, 300, ANCHOC, ALTOC);
         eliminar.setBounds(300, 300, ANCHOC, ALTOC);
         limpiar.setBounds(450, 300, ANCHOC, ALTOC);
         resultados = new JTable();
-        estado.setBounds(400, 200, ANCHOC, ALTOC);
+        estado.setBounds(430, 180, ANCHOC, ALTOC);
         
         resultados = new JTable() {
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -158,10 +158,7 @@ public class Consulta extends JFrame {
                         return String.class;
                     case 4:
                         return String.class;
-                    case 5:
-                        return String.class;
-                    case 6:
-                        return String.class;
+                    
                     default:
                         return Boolean.class;
                 }
@@ -193,10 +190,12 @@ public class Consulta extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 EstudianteDao ed = new EstudianteDao();
+                System.out.print(estado.isSelected());
                 Movie estu = new Movie( nombre.getText(), director.getText(),pais.getText(), clasificacion.getSelectedItem().toString(),Integer.parseInt(año.getText()), estado.isSelected());
 
-                if (estado.isSelected()) {
-                    estu.setEn_proyeccion(true);
+                if (!estado.isSelected()) {
+                    System.out.print("DSAD");
+                    estu.setEn_proyeccion(false);
                 }
 
                 if (ed.create(estu)) {
@@ -204,7 +203,7 @@ public class Consulta extends JFrame {
                     limpiarCampos();
                     llenarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de crear el Movie");
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de insertar la pelicula");
                 }
             }
         });
@@ -212,6 +211,7 @@ public class Consulta extends JFrame {
         actualizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                /*
                 EstudianteDao ed = new EstudianteDao();
                 Movie estu = new Movie(nombre.getText(), director.getText(),pais.getText(), clasificacion.getSelectedItem().toString(),Integer.parseInt(año.getText()), true);
 
@@ -224,9 +224,13 @@ public class Consulta extends JFrame {
                     limpiarCampos();
                     llenarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de modificar el estudiante");
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de modificar la pelicula");
                 }
+*/
+            llenarTabla();
             }
+            
+
         });
 
         eliminar.addActionListener(new ActionListener() {
@@ -234,11 +238,11 @@ public class Consulta extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 EstudianteDao ed = new EstudianteDao();
                 if (ed.delete(nombre.getText())) {
-                    JOptionPane.showMessageDialog(null, "Estudiante eliminado con exito");
+                    JOptionPane.showMessageDialog(null, "Pelicula eliminado con exito");
                     limpiarCampos();
                     llenarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de eliminar el estudiante");
+                    JOptionPane.showMessageDialog(null, "Ocurrio    un problema al momento de eliminar el Pelicula");
                 }
             }
         });
@@ -282,7 +286,7 @@ public class Consulta extends JFrame {
                     nombre.setText(resultados.getValueAt(resultados.getSelectedRow(), 0).toString());
                     clasificacion.setSelectedItem(resultados.getValueAt(resultados.getSelectedRow(), 3).toString());
                     director.setText(resultados.getValueAt(resultados.getSelectedRow(), 1).toString());
-//                    edad.setText(resultados.getValueAt(resultados.getSelectedRow(), 3).toString()); 
+
                     pais.setText(resultados.getValueAt(resultados.getSelectedRow(), 2).toString()); 
                     if (resultados.getValueAt(resultados.getSelectedRow(), 4).toString() == "false") {
                         estado.setSelected(true);
